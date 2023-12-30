@@ -18,13 +18,13 @@ class TweetDatasource{
   }
 
 
-  static Future<bool> postTweet() async {
+  static Future<bool> postTweet(TweetModel tweetModel) async {
+    // if(name == null && tweet == null) {
+    //   return false;
+    // } 
+
     http.Response res = await http.post(Uri.parse("https://658fc671cbf74b575eca2089.mockapi.io/tweet"),
-    body: {
-      "auther": "app user 2",
-      "body": "tweet from app user 2"
-    }
-    );
+    body: tweetModel.toJson());
     if(res.statusCode == 200){
       return true;
     }

@@ -10,6 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _nameTextEditingController = TextEditingController();
+  TextEditingController _tweetTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +39,7 @@ class _HomePageState extends State<HomePage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextField(
+                                          controller: _nameTextEditingController,
                                           decoration: InputDecoration(
                                           labelText: 'Name',
                                           border: OutlineInputBorder(
@@ -51,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                              Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextField(
+                                          controller: _tweetTextEditingController,
                                           decoration: InputDecoration(
                                           labelText: 'Tweets',
                                           border: OutlineInputBorder(
@@ -62,8 +66,12 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                 ),
-                            ElevatedButton(onPressed: (){
-                                TweetDatasource.postTweet();
+                            ElevatedButton(onPressed: () async {
+                              String name = _nameTextEditingController.text;
+                              String tweet = _tweetTextEditingController.text;
+                               await TweetDatasource.postTweet(TweetModel(auther: name, body: tweet));
+                              Navigator.pop(context);
+                              print("post button working");
                             }, child: Text("Post") )
                         ]),
                       )

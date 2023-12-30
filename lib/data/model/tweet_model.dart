@@ -1,14 +1,16 @@
+
+import 'dart:convert';
 class TweetModel {
     String auther;
     String body;
-    DateTime postedAt;
-    String id;
+    DateTime? postedAt;
+    String? id;
 
     TweetModel({
         required this.auther,
         required this.body,
-        required this.postedAt,
-        required this.id,
+        this.postedAt,
+        this.id,
     });
 
     factory TweetModel.fromJson(Map<String, dynamic> json) => TweetModel(
@@ -18,10 +20,10 @@ class TweetModel {
         id: json["id"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "auther": auther,
-        "body": body,
-        "posted_at": postedAt.toIso8601String(),
-        "id": id,
-    };
+    Map<String, String> toJson() {
+        Map<String, String> data = {};
+        data["auther"] = auther?? "annon user";
+        data["body"] = body?? "empty";
+        return data; 
+    }
 }
